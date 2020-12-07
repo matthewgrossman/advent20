@@ -1,15 +1,15 @@
-import { NumberArrayIO, ArrayIO } from "../helpers/io";
+import { NumberArrayIO } from "../helpers/io";
 
-function matchingEntries(io: number[]): [number, number] {
-  const complements = new Set(io.map((val) => 2020 - val));
+function numbersAddToSum(io: number[], sum: number): [number, number] {
+  const complements = new Set(io.map((val) => sum - val));
   for (const num of io) {
-    if (complements.has(num)) return [num, 2020 - num];
+    if (complements.has(num)) return [num, sum - num];
   }
-  return [-1, -1];
+  throw new Error("no matching entries found")
 }
 
 (async () => {
-  const io = await NumberArrayIO();
-  const product = matchingEntries(io).reduce((a, b) => a * b, 1);
-  console.log(product);
+  const io = await NumberArrayIO()
+  const [a, b] = numbersAddToSum(io, 2020)
+  console.log(a * b);
 })();
